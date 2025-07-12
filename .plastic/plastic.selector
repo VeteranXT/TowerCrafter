@@ -1,0 +1,4 @@
+repository "TowerCraft@VeteranXT@cloud"
+  path "/"
+    br "/main"
+    co "/main"

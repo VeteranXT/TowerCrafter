@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 813c495d7e5d0334881e03c626d42d62, type: 3}
+  m_Name: First Place
+  m_EditorClassIdentifier: 
+  dungeonName: DogScrap
+  waves:
+  - enemy: {fileID: 11400000, guid: 5ab599f809bbe38489185f732a35ef55, type: 2}
+    amount:
+      BaseValue: 0
+    spawnLocation: 0
+  dungeonMapPrefab: {fileID: 0}
+  dungeonDescription:
+    description: 'Dungeon Name: {0}
+
+'
+    exposedValues:
+    - _fieldName: Dungeon/Dungeon Name
+  lockedDungeonIcon: {fileID: 0}
+  campaignOpen: {fileID: 0}
+  campaignWon: {fileID: 0}
+  endless: {fileID: 0}
+  isDungeonDefeated: 0
+  preRequsite: []
+  isLocked: 0
+  unlocksDungeons: []
+  expEarned: 0
+  expEndlessEarned: 0
+  resetExpEndlessEarned: 0
+  resetEarned: 0
+  resetIsLocked: 0
+  resetIsDungeonDefeated: 0
+  resetPreRequsite: []
+  resetUnlocksDungeons: []

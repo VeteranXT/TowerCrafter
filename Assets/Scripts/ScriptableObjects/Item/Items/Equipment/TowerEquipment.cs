@@ -15,7 +15,7 @@ public enum TowerSlot
     UtilitySlot
     // +% or % is increased by ...aka if damage is 100 and increased damage is 10% damage is 110.
 }
-public class TowerEquipment : ItemData
+public class TowerEquipment : ItemBase
 {
     [SerializeField] private TowerSlot slot;
     public TowerSlot GetSlot {  get { return slot; } }

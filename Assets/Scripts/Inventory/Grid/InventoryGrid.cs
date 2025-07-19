@@ -8,21 +8,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
-    private ItemData[,] grid;
+    private DragDropUI[,] grid;
     [SerializeField] private int slotWidth = 48;
     [SerializeField] private int slotHeight = 48;
     [SerializeField] private int rows = 12;
     [SerializeField] private int collums = 18;
     [SerializeField] private RectTransform parentHolder;
     [SerializeField] private Image slotsImage;
-    [SerializeField] private GridLayoutGroup gridlayout;
-
-    public static event Action<InventoryGrid> OnInventoryGrid;
+    public static event Action<InventoryGrid> EventOnGridChanged;
+    public static event Action<PointerEventData> EventDragedDroped;
     public int Width { get { return slotWidth; } }
     public int Height { get { return slotHeight; } }
-    public ItemData[,] GetGrid { get { return grid; } set { grid = value; } }
+    public DragDropUI[,] GetGrid { get { return grid; } set { grid = value; } }
     public RectTransform GridRect { get { return parentHolder; } }
     private void OnValidate()
     {
@@ -32,24 +31,21 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void Start()
     {
         slotsImage = GetComponent<Image>();
-        slotsImage.type = Image.Type.Tiled;
-        gridlayout = GetComponent<GridLayoutGroup>();
+        slotsImage.type = Image.Type.Tiled;;
         parentHolder = GetComponent<RectTransform>();
         if (parentHolder == null)
         {
             Debug.LogError("Coudn't find parent");
             return;
         }
-       
-        gridlayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        gridlayout.constraintCount = collums;
-        gridlayout.cellSize = new Vector2(slotWidth, slotHeight);
 
-        grid = new ItemData[rows, collums];
+
+        grid = new DragDropUI[rows, collums];
         parentHolder.sizeDelta = new Vector2 (collums * slotWidth,  rows * slotHeight);
 
 
     }
+    [Obsolete("")]
     public void CreateInventoryGrid(int rows, int collums)
     {
       
@@ -58,7 +54,8 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             Debug.LogError("Coudn't find parent");
             return;
         }
-        grid = new ItemData[rows, collums];
+        grid = new DragDropUI[rows, collums];
+
 
         for (int i = 0; i < rows; i++)
         {
@@ -77,11 +74,16 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
 
-        OnInventoryGrid?.Invoke(null);
+        EventOnGridChanged?.Invoke(null);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnInventoryGrid?.Invoke(this);
+        EventOnGridChanged?.Invoke(this);
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        EventDragedDroped?.Invoke(eventData);
     }
 }
 

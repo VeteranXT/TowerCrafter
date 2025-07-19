@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName ="Items/New Generic Item")]
-public class ItemData : ScriptableObject
+public class ItemBase : ScriptableObject, IInformation
 {
     [Header("General Stats")]
     [Expose("Name")]
@@ -18,13 +18,13 @@ public class ItemData : ScriptableObject
     [SerializeField] private Descriptor itemDescription = new Descriptor();
     [Header("Is Test Item")]
     [SerializeField] private bool isGeneric = true;
-
-    private Vector2Int _gridPosition;
-    public Vector2Int GridPosition {  get { return _gridPosition; }  set { _gridPosition = value; } }
-    public Vector2Int GridSize { get { return _gridsize.GetItemSize; } }
+    [SerializeField] private bool hasRarity = true;
+    private Vector2 _gridPosition;
+    public Vector2 GridPosition {  get { return _gridPosition; }  set { _gridPosition = value; } }
+    public Vector2 GridSize { get { return _gridsize.GetItemSize; } }
     public string Item { get { return itemName; } set { itemName = value; } }
 
-    public void SaveGridPositon(Vector2Int gridPos)
+    public void SaveGridPositon(Vector2 gridPos)
     {
         _gridPosition = gridPos;
     }
@@ -32,11 +32,24 @@ public class ItemData : ScriptableObject
     {
        return itemDescription.FormatString(new object[] { this,rarity });
     }
-    public static ItemData CreateInstance(Vector2Int gridPosition)
+    public static ItemBase CreateCopy(Vector2Int gridPosition)
     {
-        ItemData newItem = CreateInstance<ItemData>();
+      
+        ItemBase newItem = ScriptableObject.CreateInstance<ItemBase>()  ;
 
         newItem._gridPosition = gridPosition;
         return newItem;
+    }
+
+    public string InformationName()
+    {
+        if (hasRarity)
+            return string.Format("<color={0}> {1} </color>", rarity, itemName);
+        else
+            return itemName;
+    }
+    public string Description()
+    {
+        return itemDescription.FormatString(new object[] {this, rarity });
     }
 }

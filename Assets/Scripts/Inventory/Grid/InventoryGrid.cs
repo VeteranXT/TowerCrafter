@@ -16,7 +16,6 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private int rows = 12;
     [SerializeField] private int collums = 18;
     [SerializeField] private RectTransform parentHolder;
-    [SerializeField] private Image slotsImage;
     public static event Action<InventoryGrid> EventOnGridChanged;
     public static event Action<PointerEventData> EventDragedDroped;
     public int Width { get { return slotWidth; } }
@@ -28,10 +27,10 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         parentHolder.sizeDelta = new Vector2(slotWidth * rows, slotHeight * collums);
     }
 
+
     private void Start()
     {
-        slotsImage = GetComponent<Image>();
-        slotsImage.type = Image.Type.Tiled;;
+       // slotsImage.type = Image.Type.Tiled;;
         parentHolder = GetComponent<RectTransform>();
         if (parentHolder == null)
         {
@@ -43,7 +42,11 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         grid = new DragDropUI[rows, collums];
         parentHolder.sizeDelta = new Vector2 (collums * slotWidth,  rows * slotHeight);
 
-
+        bool debug = false;
+        if (debug)
+        {
+            //grid[0,0] = 
+        }
     }
     [Obsolete("")]
     public void CreateInventoryGrid(int rows, int collums)

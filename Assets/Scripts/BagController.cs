@@ -1,16 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BagController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private List<Category> categories = new List<Category>();
+    public List<Button> controllers = new List<Button>();
+
+
+    private void Start()
     {
-        
+         GetComponentsInChildren(controllers);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

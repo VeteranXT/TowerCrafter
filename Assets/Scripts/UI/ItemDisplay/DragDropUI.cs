@@ -1,18 +1,19 @@
+using Assets.Scripts.Interfaces;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-public class DragDropUI : MonoBehaviour, IBeginDragHandler, IDragHandler ,IEndDragHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class DragDropUI : MonoBehaviour, IDraggable, IHoveredInfo, IPointerClickHandler
 {
-
     #region Fields
+
     [SerializeField] private ItemBase itemData;
     [SerializeField] private RectTransform rectTransfom;
     [SerializeField] private Image background;
     [SerializeField] private Image itemPrerview;
     [SerializeField] private CanvasGroup canvasGroup;
     private bool isDragged = false;
+
     #endregion
     public void Start()
     {
@@ -20,16 +21,18 @@ public class DragDropUI : MonoBehaviour, IBeginDragHandler, IDragHandler ,IEndDr
     }
     private void OnValidate()
     {
-        if (itemData != null) 
+        if (itemData != null)
         {
             var Grid = GetComponentInParent<InventoryGrid>();
             rectTransfom.sizeDelta = new Vector2(itemData.GridSize.x * Grid.Width, itemData.GridSize.y * Grid.Height);
             itemPrerview.sprite = itemData.ItemIcon;
         }
     }
+
     #region Properties
+
     public ItemBase ItemData { get { return itemData; } set { itemData = value; } }
-    public RectTransform RectTransform { get { return rectTransfom; } set { rectTransfom = value; } } 
+    public RectTransform RectTransform { get { return rectTransfom; } set { rectTransfom = value; } }
     public CanvasGroup CanvasGroup { get { return canvasGroup; } set { canvasGroup = value; } }
     public bool IsDragged { get { return isDragged; } set { isDragged = value; } }
     #endregion
@@ -83,6 +86,4 @@ public class DragDropUI : MonoBehaviour, IBeginDragHandler, IDragHandler ,IEndDr
     }
     #endregion
 
-   
-   
 }

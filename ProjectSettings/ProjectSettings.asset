@@ -926,8 +926,8 @@ PlayerSettings:
   cloudProjectId: a00db97c-9662-47a5-a1d8-d82cff8cb735
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: TowerCraft
+  organizationId: veteranxt
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

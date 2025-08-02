@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-
 public static class GridUtils
 {
+    /// <summary>
+    /// Marks the slots in the grid as occupied by the provided item.
+    /// This updates the grid to track which slots are used by the given UI element.
+    /// </summary>
+    /// <param name="itemData">The item data containing grid size and position information.</param>
+    /// <param name="UI">The UI element associated with the item.</param>
+    /// <param name="gridPos">The position in the grid where the item starts.</param>
+    /// <param name="grid">The inventory grid to update.</param>
+    /// <param name="savesToItem">If true, saves the item's position to its data and categry and stash indxes.</param>
+    /// <param name="cat">Optional category index.</param>
+    /// <param name="stash">Optional stash index.</param>
     public static void MarkSlots(ItemBase itemData, DragDropUI UI, Vector2 gridPos, InventoryGrid grid, bool savesToItem = false, int cat = -1, int stash = -1)
     {
         if (grid == null || grid.GetGrid == null)
@@ -32,11 +41,18 @@ public static class GridUtils
                 else
                 {
                     grid.GetGrid[(int)PosX, (int)PosY] = null;
-
                 }
             }
         }
     }
+
+    /// <summary>
+    /// Checks for overlapping items in the grid where an item is being placed.
+    /// Returns a set of unique overlapping DragDropUI elements.
+    /// </summary>
+    /// <param name="itemToPlace">The item being placed in the grid.</param>
+    /// <param name="grid">The inventory grid being checked.</param>
+    /// <returns>A HashSet containing overlapping DragDropUI items.</returns>
     public static HashSet<DragDropUI> OverlapedCount(DragDropUI itemToPlace, InventoryGrid grid)
     {
         HashSet<DragDropUI> overlapedData = new HashSet<DragDropUI>();
@@ -66,20 +82,41 @@ public static class GridUtils
 
         return overlapedData;
     }
+
+    /// <summary>
+    /// Checks if an item is within the bounds of the grid.
+    /// Ensures the item fits entirely within the grid dimensions.
+    /// </summary>
+    /// <param name="grid">The inventory grid to check.</param>
+    /// <param name="item">The item being checked.</param>
+    /// <param name="rectTransform">The RectTransform of the item.</param>
+    /// <returns>True if the item is within bounds, otherwise false.</returns>
     public static bool InBounds(InventoryGrid grid, ItemBase item, RectTransform rectTransform)
     {
         int gridWidth = grid.Width;
         int gridHeight = grid.Height;
         var gridPosition = GetGridPositionFromAnchorPosition(grid, rectTransform);
-        // Check if the rectDropUI fits within the inventoryGrid bounds
-        if(grid == null)
+
+        // Check if the item fits within the inventory grid bounds
+        if (grid == null)
             return false;
-        return 
-            gridPosition.x >= 0 && 
+
+        return
+            gridPosition.x >= 0 &&
             gridPosition.y >= 0 &&
             gridPosition.x + item.GridSize.x <= gridWidth &&
             gridPosition.y + item.GridSize.y <= gridHeight;
     }
+
+    /// <summary>
+    /// Checks if two items overlap in the grid.
+    /// Compares the positions and sizes of both items to determine if they occupy the same slots.
+    /// </summary>
+    /// <param name="grid">The inventory grid being checked.</param>
+    /// <param name="gridPos">The grid position of the dragged item.</param>
+    /// <param name="currentDragedItem">The currently dragged item.</param>
+    /// <param name="item">The item being overlapped.</param>
+    /// <returns>True if the items overlap, otherwise false.</returns>
     public static bool SameOverlapping(InventoryGrid grid, Vector2 gridPos, ItemBase currentDragedItem, ItemBase item)
     {
         var OldPosition = currentDragedItem.GridPosition;
@@ -95,7 +132,6 @@ public static class GridUtils
                 {
                     for (int y2 = 0; y2 < item.GridSize.y; y2++)
                     {
-
                         var cellX2 = gridPos.x + x2;
                         var cellY2 = gridPos.y + y2;
 
@@ -106,32 +142,55 @@ public static class GridUtils
                         }
                         if (cellX == cellX2 && cellY == cellY2)
                             return true;
-
                     }
                 }
             }
         }
         return false;
     }
+
+    /// <summary>
+    /// Converts a RectTransform's anchored position to a grid position.
+    /// Calculates the grid cell based on the item's anchored position and grid dimensions.
+    /// </summary>
+    /// <param name="grid">The inventory grid being referenced.</param>
+    /// <param name="rect">The RectTransform of the item.</param>
+    /// <returns>The grid position as a Vector2Int.</returns>
     public static Vector2Int GetGridPositionFromAnchorPosition(InventoryGrid grid, RectTransform rect)
     {
-        return new Vector2Int(Mathf.FloorToInt(rect.anchoredPosition.x / grid.Width), Mathf.FloorToInt(-rect.anchoredPosition.y / grid.Height));
+        return new Vector2Int(
+            Mathf.FloorToInt(rect.anchoredPosition.x / grid.Width),
+            Mathf.FloorToInt(-rect.anchoredPosition.y / grid.Height)
+        );
     }
 
-    //private Vector2 GetGridPositionFromMouse(InventoryGrid inventoryGrid)
-    //{
-    //    RectTransformUtility.ScreenPointToLocalPointInRectangle(inventoryGrid.GridRect, Input.mousePosition, null, out Vector2 local);
-    //    return new Vector2Int(Mathf.FloorToInt(local.x / inventoryGrid.Width), Mathf.FloorToInt(-local.y / inventoryGrid.Height));
-    //}
-    public static  Vector2 GetAnchorPositionFromItem(InventoryGrid grid, ItemBase item)
+    /// <summary>
+    /// Converts an item's grid position to an anchored position in the grid.
+    /// Aligns the item's anchor point based on its position in the grid.
+    /// </summary>
+    /// <param name="grid">The inventory grid being referenced.</param>
+    /// <param name="item">The item whose position is being converted.</param>
+    /// <returns>The anchored position as a Vector2.</returns>
+    public static Vector2 GetAnchorPositionFromItem(InventoryGrid grid, ItemBase item)
     {
-        return new Vector2(Mathf.FloorToInt(item.GridPosition.x * grid.Width), Mathf.FloorToInt(item.GridPosition.y * grid.Height));
+        return new Vector2(
+            Mathf.FloorToInt(item.GridPosition.x * grid.Width),
+            Mathf.FloorToInt(item.GridPosition.y * grid.Height)
+        );
     }
+
+    /// <summary>
+    /// Converts a grid position to an anchored position in the grid.
+    /// Aligns the item's anchor point based on its grid cell position.
+    /// </summary>
+    /// <param name="grid">The inventory grid being referenced.</param>
+    /// <param name="gridPosition">The grid position of the item.</param>
+    /// <returns>The anchored position as a Vector2.</returns>
     public static Vector2 GetAnchorPositionFromGridPosition(InventoryGrid grid, Vector2 gridPosition)
     {
-        return new Vector2(Mathf.FloorToInt(gridPosition.x * grid.Width), Mathf.FloorToInt(-gridPosition.y * grid.Width));
+        return new Vector2(
+            Mathf.FloorToInt(gridPosition.x * grid.Width),
+            Mathf.FloorToInt(-gridPosition.y * grid.Width)
+        );
     }
-  
-
 }
-

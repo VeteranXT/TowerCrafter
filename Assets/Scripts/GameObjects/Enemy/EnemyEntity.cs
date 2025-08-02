@@ -5,13 +5,14 @@ using System;
 public class EnemyEntity : MonoBehaviour
 {
     [Header("General Stats")]
-    [SerializeField] private CharacterStat armor = new CharacterStat();
+    [SerializeField] private CharacterStat armor = new CharacterStat(0f);
     [SerializeField] private HealthSystem health = new HealthSystem(100f);
-    [SerializeField] private CharacterStat moveSpeed = new CharacterStat();
-    [SerializeField] private CharacterStat attackSpeed = new CharacterStat();
-    [SerializeField] private CharacterStat minDamage = new CharacterStat();
-    [SerializeField] private CharacterStat maxDamage = new CharacterStat();
-    [SerializeField] private CharacterStat attackRange = new CharacterStat();
+    [SerializeField] private CharacterStat moveSpeed = new CharacterStat(1.4f);
+    [SerializeField] private CharacterStat attackSpeed = new CharacterStat(1f);
+    [SerializeField] private CharacterStat minDamage = new CharacterStat(1f);
+    [SerializeField] private CharacterStat maxDamage = new CharacterStat(8f);
+    //Mele for 1f?
+    [SerializeField] private CharacterStat attackRange = new CharacterStat(1f);
     [SerializeField] private bool isAlive = true;
     [SerializeField] private bool isPurged = false;
     [Space]

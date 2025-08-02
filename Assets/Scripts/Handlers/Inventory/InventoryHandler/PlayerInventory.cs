@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class InventoryHandler : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
     public static List<ItemBase> items = new List<ItemBase>();
 

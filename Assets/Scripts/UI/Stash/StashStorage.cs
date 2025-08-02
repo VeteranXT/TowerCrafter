@@ -1,21 +1,20 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StashStorage : MonoBehaviour
 {
-    private TMP_Text stashName;
-    private Image stashIcon;
-    private Button stashButton;
-    public List<DragDropUI> DragDropUI = new List<DragDropUI>();
+    [SerializeField] private TMP_Text stashName;
+    [SerializeField] private Image stashIcon;
+    [SerializeField] private Button stashButton;
+    [SerializeField] private List<DragDropUI> activeUi = new List<DragDropUI>();
     private int categoryIndex;
     public event Action<int> EventStashClicked;
     public int CategoryIndex { get { return categoryIndex; }  set { categoryIndex = value; } }
+    public List<DragDropUI> DragDropUI { get { return activeUi; } }
     public int CurretStashIndex()
     {
         return transform.GetSiblingIndex();

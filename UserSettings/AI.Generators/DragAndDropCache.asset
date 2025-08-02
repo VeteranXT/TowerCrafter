@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.AI.Generators.UI::Unity.AI.Generators.UI.Utilities.DragAndDropCache
   entries:
-    serializedData: []
+    serializedData:
+    - key: GeneratedAssets\e349759ae8869794c9d00479b382e53d\019837fb-674b-7afd-8c13-9a3e8349c6ca.png
+      value: 6c40228bccbde2c46b8ab578229a46b2

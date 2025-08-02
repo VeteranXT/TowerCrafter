@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -24,11 +24,11 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public RectTransform GridRect { get { return parentHolder; } }
     private void OnValidate()
     {
-        parentHolder.sizeDelta = new Vector2(slotWidth * rows, slotHeight * collums);
+        parentHolder.sizeDelta = new Vector2(slotWidth * collums, slotHeight * rows);
     }
 
 
-    private void Start()
+    private void Awake()
     {
        // slotsImage.type = Image.Type.Tiled;;
         parentHolder = GetComponent<RectTransform>();
@@ -39,7 +39,7 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
 
 
-        grid = new DragDropUI[rows, collums];
+        grid = new DragDropUI[collums, rows];
         parentHolder.sizeDelta = new Vector2 (collums * slotWidth,  rows * slotHeight);
 
         bool debug = false;
@@ -48,32 +48,7 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             //grid[0,0] = 
         }
     }
-    [Obsolete("")]
-    public void CreateInventoryGrid(int rows, int collums)
-    {
-      
-        if (parentHolder == null)
-        {
-            Debug.LogError("Coudn't find parent");
-            return;
-        }
-        grid = new DragDropUI[rows, collums];
-
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < collums; j++)
-            {
-                GameObject gameObject = new GameObject();
-                Image sprite = gameObject.AddComponent<Image>();
-                sprite.transform.position = new Vector3(slotWidth * i, slotHeight * j);
-                sprite.transform.SetParent(parentHolder, true);
-
-                //GetGrid[i, j]
-            }
-        }
-
-    }
+    
     public void OnPointerExit(PointerEventData eventData)
     {
 

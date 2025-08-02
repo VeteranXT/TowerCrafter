@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Dungeon : ScriptableObject, IDungeonSaveData
+public class Dungeon : ScriptableObject, IDungeonSaveData//, IInformation
 {
+
+
     #region Fields
     [SerializeField,Expose("Dungeon Name")] private string dungeonName;
     [SerializeField] private List<Wave> waves = new List<Wave>();
-    //List of dungeons  that must be defeated in order to unlock this dungeon
-    //Flag to set if this dungeon is unlocked
-    //flag to set status of defeated dungeon
-    //List of dungeons we can unlock if this dungeon is defeated
     [SerializeField] private GameObject dungeonMapPrefab;
     [SerializeField] private Descriptor dungeonDescription = new Descriptor();
     [SerializeField] private Sprite lockedDungeonIcon;
@@ -23,19 +21,17 @@ public class Dungeon : ScriptableObject, IDungeonSaveData
     [SerializeField] private Sprite endless;
 
     [Header("Base Stats")]
-    [SerializeField] private bool isDungeonDefeated = false;
-    [SerializeField] private List<Dungeon> preRequsite = new List<Dungeon>();
     [SerializeField] private bool isLocked = false;
+    [SerializeField] private List<Dungeon> preRequsite = new List<Dungeon>();
     [SerializeField] private List<Dungeon> unlocksDungeons = new List<Dungeon>();
+    [SerializeField] private bool isDungeonDefeated = false;
     [SerializeField] private float expEarned = 0;
     [SerializeField] private float expEndlessEarned = 0;
-    [Header("Reset stats match above!")]
+    [Header("Reset")]
     [SerializeField] private float resetExpEndlessEarned = 0;
     [SerializeField] private float resetEarned = 0;
-    [SerializeField] private bool resetIsLocked = false;
-    [SerializeField] private bool resetIsDungeonDefeated = false;
-    [SerializeField] private List<Dungeon> resetPreRequsite = new List<Dungeon>();
-    [SerializeField] private List<Dungeon> resetUnlocksDungeons = new List<Dungeon>();
+    [SerializeField] private bool restInitallyLocked = false;
+    [SerializeField] private bool resetIsDefeated = false;
     #endregion
 
     #region Properties
@@ -55,6 +51,18 @@ public class Dungeon : ScriptableObject, IDungeonSaveData
 
     #endregion
 
+    private void Awake()
+    {
+        SaveResets();
+    }
+
+    private void SaveResets()
+    {
+        restInitallyLocked = isLocked;
+        resetIsDefeated = isDungeonDefeated;
+    }
+
+    #region Public Methods
     public bool EarnedMoreCampaign(float amount)
     {
         return amount > CampaginExpEarned;
@@ -125,7 +133,6 @@ public class Dungeon : ScriptableObject, IDungeonSaveData
     {
         isDungeonDefeated = false;
     }
-
     [Expose("Unique Enemies Types")]
     public List<string> UniqueWaveEnemyNames
     {
@@ -155,8 +162,10 @@ public class Dungeon : ScriptableObject, IDungeonSaveData
     }
     public Dungeon CreateCopy()
     {
-        return Instantiate(this); 
+        return Instantiate(this);
     }
-    
+    #endregion
+
+
 }
 

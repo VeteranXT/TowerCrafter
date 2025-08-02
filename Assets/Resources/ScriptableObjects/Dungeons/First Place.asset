@@ -12,32 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813c495d7e5d0334881e03c626d42d62, type: 3}
   m_Name: First Place
   m_EditorClassIdentifier: 
-  dungeonName: DogScrap
+  dungeonName: First Discovery
   waves:
-  - enemy: {fileID: 11400000, guid: 5ab599f809bbe38489185f732a35ef55, type: 2}
+  - enemy: {fileID: 0}
     amount:
       BaseValue: 0
     spawnLocation: 0
   dungeonMapPrefab: {fileID: 0}
   dungeonDescription:
-    description: 'Dungeon Name: {0}
-
-'
-    exposedValues:
-    - _fieldName: Dungeon/Dungeon Name
+    description: 
+    exposedValues: []
   lockedDungeonIcon: {fileID: 0}
   campaignOpen: {fileID: 0}
   campaignWon: {fileID: 0}
   endless: {fileID: 0}
-  isDungeonDefeated: 0
-  preRequsite: []
   isLocked: 0
+  preRequsite:
+  - {fileID: 11400000}
   unlocksDungeons: []
+  isDungeonDefeated: 0
   expEarned: 0
   expEndlessEarned: 0
   resetExpEndlessEarned: 0
   resetEarned: 0
-  resetIsLocked: 0
-  resetIsDungeonDefeated: 0
-  resetPreRequsite: []
-  resetUnlocksDungeons: []
+  restInitallyLocked: 0
+  resetIsDefeated: 0

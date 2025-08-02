@@ -1,43 +1,51 @@
-
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-
-[CreateAssetMenu(menuName ="Items/New Generic Item")]
+[CreateAssetMenu(menuName = "Items/New Generic ItemName")]
 public class ItemBase : ScriptableObject, IInformation
 {
     [Header("General Stats")]
     [Expose("Name")]
+
     [SerializeField] private string itemName;
-    //Has Exposed , Item Rarity
+    [SerializeField] private int categoryIndex;
+    [SerializeField] private int stashIndex;
+
+
+    //Has Exposed , ItemName Rarity
     [SerializeField] private ItemRarity rarity;
     [SerializeField] private ItemSize _gridsize;
+    [SerializeField] private Vector2 gridPosition;
+
     [SerializeField] private Sprite icon;
     [Header("Description")]
     [SerializeField] private Descriptor itemDescription = new Descriptor();
-    [Header("Is Test Item")]
-    [SerializeField] private bool isGeneric = true;
     [SerializeField] private bool hasRarity = true;
-    private Vector2 _gridPosition;
-    public Vector2 GridPosition {  get { return _gridPosition; }  set { _gridPosition = value; } }
-    public Vector2 GridSize { get { return _gridsize.GetItemSize; } }
-    public string Item { get { return itemName; } set { itemName = value; } }
+    [Header("Is Test ItemName")]
+    [SerializeField] private bool isGeneric = true;
 
-    public void SaveGridPositon(Vector2 gridPos)
+
+    public Vector2 GridPosition { get { return gridPosition; } set { gridPosition = value; } }
+    public Vector2 GridSize { get { return _gridsize.GetItemSize; } }
+    public string ItemName { get { return itemName; } set { itemName = value; } }
+    public int CategoryIndex { get { return categoryIndex; } }
+    public int StashIndex { get { return stashIndex; } }
+    public Sprite ItemIcon { get { return icon; } }
+    public void SaveGridPositon(Vector2 gridPos, int categoryIndex, int stashIndex)
     {
-        _gridPosition = gridPos;
+        this.categoryIndex = categoryIndex;
+        this.stashIndex = stashIndex;
+        this.gridPosition = gridPos;
     }
     public virtual string GetDiscription()
     {
-       return itemDescription.FormatString(new object[] { this,rarity });
+        return itemDescription.FormatString(new object[] { this, rarity });
     }
-    public static ItemBase CreateCopy(Vector2Int gridPosition)
+    public static ItemBase CreateCopy(Vector2Int gridPosition, ItemBase orginal)
     {
-      
-        ItemBase newItem = ScriptableObject.CreateInstance<ItemBase>()  ;
 
-        newItem._gridPosition = gridPosition;
+        ItemBase newItem = Instantiate(orginal); ;
+
+        newItem.gridPosition = gridPosition;
         return newItem;
     }
 
@@ -50,6 +58,6 @@ public class ItemBase : ScriptableObject, IInformation
     }
     public string Description()
     {
-        return itemDescription.FormatString(new object[] {this, rarity });
+        return itemDescription.FormatString(new object[] { this, rarity });
     }
 }

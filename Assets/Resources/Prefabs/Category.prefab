@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 8958174440338552759}
   - component: {fileID: 3165787905376792542}
   - component: {fileID: 6644109607098268418}
+  - component: {fileID: 1572976203446298726}
   m_Layer: 5
   m_Name: Category
   m_TagString: Untagged
@@ -402,3 +403,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1572976203446298726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381670407741327254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0e5d67d9b29b44a897bbefc934c6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Category
+  categoryName: {fileID: 1694656895241738113}
+  categoryIcon: {fileID: 797839748892997640}
+  categoryButton: {fileID: 6644109607098268418}

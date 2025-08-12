@@ -2,69 +2,64 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TowerCrafter.Grid.Utlis;
+using NUnit.Framework.Constraints;
 
 namespace TowerCrafter.Grid
 {
     public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler
     {
-        private DragDropUI[,] grid;
-        [SerializeField] private int slotWidth = 32;
-        [SerializeField] private int slotHeight = 32;
-        [SerializeField] private int rows = 12;
-        [SerializeField] private int collums = 18;
-        [SerializeField] private RectTransform parentHolder;
+        protected DragDropUI[,] grid;
+        [SerializeField] protected int slotWidth = 32;
+        [SerializeField] protected int slotHeight = 32;
+        [SerializeField] protected int rows = 12;
+        [SerializeField] protected int collums = 18;
+        [SerializeField] protected RectTransform parentHolder;
 
         public static event Action<InventoryGrid> EventOnGridChanged;
         public static event Action<DragDropUI> EventDragedDroped;
         public int Width { get { return slotWidth; } }
         public int Height { get { return slotHeight; } }
         public DragDropUI[,] GetGrid { get { return grid; } set { grid = value; } }
-        public RectTransform GridRect { get { return parentHolder; } }
+        protected RectTransform GridRect { get { return parentHolder; } }
 
-        [SerializeField] bool debug = false;
-        [SerializeField] private ItemBase[] items;
-        [SerializeField] private InventoryGrid tempGrid;
-        [SerializeField] private DragDropUI prefab;
-        private void DebugCreate(ItemBase[] items)
-        {
-            for (int i = 0; i < items.Length; i++)
-            {
-                var item = items[i];
-                this.TryFindFirstAvailablePosition(item, out Vector2Int pos);
-                GeneralFactory.CreateDragDropUI(tempGrid.transform.parent, prefab, item, pos, tempGrid);
-            }
-        }
+        public Vector2Int GetGridSize { get { return new Vector2Int(Width, Height); } }
+
+        public Vector2Int CellSize { get { return new Vector2Int(slotWidth, slotHeight); } }
         public virtual void OnValidate()
         {
-            parentHolder = GetComponentInChildren<PlayerGridTag>().GetComponent<RectTransform>();
-
-            parentHolder.sizeDelta = new Vector2(slotWidth * collums, slotHeight * rows);
+            parentHolder = GetComponent<PlayerGridTag>().GetComponent<RectTransform>();
+            if (parentHolder == null)
+            {
+                Debug.LogError("Coudn't find parent");
+                return;
+            }
+            grid = new DragDropUI[collums, rows];
+            parentHolder.sizeDelta = new Vector2(collums * slotWidth, rows * slotHeight);
         }
-
-
         private void Awake()
         {
-            // slotsImage.type = Image.Type.Tiled;;
-            parentHolder = GetComponent<RectTransform>();
+            parentHolder = GetComponent<PlayerGridTag>().GetComponent<RectTransform>(); 
+            if (parentHolder == null)
+            {
+                Debug.LogError("Coudn't find parent");
+                return;
+            }
+            grid = new DragDropUI[collums, rows];
+            parentHolder.sizeDelta = new Vector2(collums * slotWidth, rows * slotHeight);
+        }
+        private void Start()
+        {
+            parentHolder = GetComponentInChildren<PlayerGridTag>().GetComponent<RectTransform>();
             if (parentHolder == null)
             {
                 Debug.LogError("Coudn't find parent");
                 return;
             }
 
-
             grid = new DragDropUI[collums, rows];
             parentHolder.sizeDelta = new Vector2(collums * slotWidth, rows * slotHeight);
-
-
         }
-        private void Start()
-        {
-            if (debug)
-            {
-                DebugCreate(items);
-            }
-        }
+           
 
         public void OnPointerExit(PointerEventData eventData)
         {

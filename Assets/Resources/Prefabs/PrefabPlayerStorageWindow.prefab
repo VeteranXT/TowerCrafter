@@ -100,8 +100,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6047888999419421599}
-  - component: {fileID: 3381422283645847636}
-  - component: {fileID: 1112477194625235297}
   m_Layer: 5
   m_Name: PrefabPlayerStorageWindow
   m_TagString: Untagged
@@ -131,47 +129,6 @@ RectTransform:
   m_AnchoredPosition: {x: -484.23404, y: 0}
   m_SizeDelta: {x: 800, y: 970}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3381422283645847636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338188572073945698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4014de9db0f46f4b8425149b82040c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StorageFilterHandler
-  categoryParent: {fileID: 5608981828437999758}
-  stashParent: {fileID: 3700339305242026288}
-  gridParent: {fileID: 7180921867802354032}
-  prefabCatrgoryOrStash: {fileID: 0}
-  activeUI: []
-  CategoryButtons: []
-  currentCategoryIndex: 0
-  currentStashIndex: 0
---- !u!114 &1112477194625235297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338188572073945698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480e9e254a7363145af2a58288951b3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStorageGrid
-  slotWidth: 32
-  slotHeight: 32
-  rows: 20
-  collums: 20
-  parentHolder: {fileID: 7180921867802354032}
-  debug: 0
-  items: []
-  tempGrid: {fileID: 0}
-  prefab: {fileID: 0}
 --- !u!1 &431474378162546313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,7 +1116,7 @@ GameObject:
   - component: {fileID: 5902772538177116040}
   - component: {fileID: 8758163105201257386}
   m_Layer: 5
-  m_Name: Add Stash
+  m_Name: Add CategoryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2083,7 +2040,9 @@ GameObject:
   - component: {fileID: 7180921867802354032}
   - component: {fileID: 8169617403797621918}
   - component: {fileID: 6151225628540050148}
-  - component: {fileID: 88691030330228702}
+  - component: {fileID: 3645639420890908463}
+  - component: {fileID: 3897633839912678914}
+  - component: {fileID: 137711969814943436}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -2108,7 +2067,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 86, y: -224}
-  m_SizeDelta: {x: 640, y: 640}
+  m_SizeDelta: {x: 576, y: 384}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8169617403797621918
 CanvasRenderer:
@@ -2148,7 +2107,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &88691030330228702
+--- !u!114 &3645639420890908463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2160,6 +2119,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e016e6ed7769a48a233a5fef2c91da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGridTag
+--- !u!114 &3897633839912678914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072256187677294636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4014de9db0f46f4b8425149b82040c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StorageFilterHandler
+  categoryHandler: {fileID: 0}
+  categoryParent: {fileID: 5608981828437999758}
+  stashHandler: {fileID: 0}
+  stashParent: {fileID: 3700339305242026288}
+  gridParent: {fileID: 7180921867802354032}
+  prefabCatrgoryOrStash: {fileID: 0}
+  CategoryButtons: []
+  currentCategoryIndex: 0
+  currentStashIndex: 0
+  grid: {fileID: 137711969814943436}
+  debug: 0
+  items: []
+  prefab: {fileID: 0}
+--- !u!114 &137711969814943436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072256187677294636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480e9e254a7363145af2a58288951b3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerCrafter.Grid.PlayerStorageGrid
+  slotWidth: 32
+  slotHeight: 32
+  rows: 12
+  collums: 18
+  parentHolder: {fileID: 7180921867802354032}
 --- !u!1 &6971666052912920228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,21 +2378,7 @@ MonoBehaviour:
   rectView: {fileID: 3550807357393068337}
   moveRight: {fileID: 188977583239556988}
   moveLeft: {fileID: 6477812222130477578}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6079136009419718840}
-        m_TargetAssemblyTypeName: ScrollViewHandler, Assembly-CSharp
-        m_MethodName: CreateStash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  addButton: {fileID: 2398372679386496714}
 --- !u!1 &7320183658168775209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,18 +2873,4 @@ MonoBehaviour:
   rectView: {fileID: 5741638832068787840}
   moveRight: {fileID: 4094219719233750782}
   moveLeft: {fileID: 8618404290324885580}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7896210334902314114}
-        m_TargetAssemblyTypeName: ScrollViewHandler, Assembly-CSharp
-        m_MethodName: CreateStash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  addButton: {fileID: 5902772538177116040}

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TowerCrafter.Grid;
 using TowerCrafter.Grid.Utlis;
+using UnityEditor;
 
 public class DragDropUIHandler : MonoBehaviour
 {
@@ -65,9 +66,9 @@ public class DragDropUIHandler : MonoBehaviour
         var drop = data.pointerDrag.GetComponent<DragDropUI>();
         drop.CanvasGroup.blocksRaycasts = true;
         drop.CanvasGroup.alpha = 1f;
-        var curretDropCordintates = hoveredGrid.GridPositionFromAnchorPosition( drop.RectTransform);
 
-        if (hoveredGrid == null && !hoveredGrid.InBounds( drop.ItemData, curretDropCordintates))
+
+        if (hoveredGrid == null)
         {
             oldGrid.ReturnToOrginalPosition(drop);
             oldGrid = null;
@@ -80,12 +81,13 @@ public class DragDropUIHandler : MonoBehaviour
         if (selectedUI == null)
         {
             selectedUI = data.pointerClick.GetComponent<DragDropUI>();
-            hoveredGrid.MarkSlots( selectedUI.ItemData, null, selectedUI.ItemData.GridPosition);
+            hoveredGrid.MarkSlots(selectedUI.ItemData, null, selectedUI.ItemData.GridPosition);
             return;
         }
 
         if (selectedUI != null)
         {
+            if(hoveredGrid == null) return;
             HandleDrop(selectedUI);
         }
 
@@ -101,7 +103,8 @@ public class DragDropUIHandler : MonoBehaviour
 
         if (!hoveredGrid.InBounds (dragItemData, hoveredGridPos)) return;
 
-        var list = hoveredGrid.CountOverlaps( data);
+        var list = hoveredGrid.CountOverlaps(data);
+        if(list == null) return;
         if (list.Count == 0)
         {
             hoveredGrid.Place(data, hoveredGridPos);

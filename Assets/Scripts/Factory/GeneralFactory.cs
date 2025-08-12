@@ -12,8 +12,8 @@ public  class GeneralFactory : MonoBehaviour
     public static DragDropUI CreateDragDropUI(Transform parent, DragDropUI prefab, ItemBase item, Vector2Int gridPos, InventoryGrid grid)
     {
         DragDropUI drag = Instantiate(prefab, parent);
-        drag.SetupItem(item);
-        drag.RectTransform.anchoredPosition = GridUtils.AnchorPositionFromGridPosition(grid, gridPos);
+        drag.SetupItem(item, grid);
+        grid.Place(drag, gridPos);
         return drag;
     }
 
@@ -23,6 +23,12 @@ public  class GeneralFactory : MonoBehaviour
         storage.CategoryIndex = categoryIndex;
 
         return storage;
+    }
+    public static UICategory CreateCategory(Transform parent, GameObject prefab, string categoryName = "")
+    {
+        var cat = Instantiate(prefab, parent.transform).AddComponent<UICategory>();
+
+        return cat;
     }
 }
 

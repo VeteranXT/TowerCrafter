@@ -14,7 +14,7 @@ public class ItemBase : ScriptableObject, IInformation
     //Has Exposed , ItemName Rarity
     [SerializeField] private ItemRarity rarity;
     [SerializeField] private ItemSize _gridsize;
-    [SerializeField] private Vector2 gridPosition;
+    [SerializeField] private Vector2Int gridPosition;
 
     [SerializeField] private Sprite icon;
     [Header("Description")]
@@ -24,13 +24,13 @@ public class ItemBase : ScriptableObject, IInformation
     [SerializeField] private bool isGeneric = true;
 
 
-    public Vector2 GridPosition { get { return gridPosition; } set { gridPosition = value; } }
-    public Vector2 GridSize { get { return _gridsize.GetItemSize; } }
+    public Vector2Int GridPosition { get { return gridPosition; } set { gridPosition = value; } }
+    public Vector2Int GridSize { get { return _gridsize.GetItemSize; } }
     public string ItemName { get { return itemName; } set { itemName = value; } }
     public int CategoryIndex { get { return categoryIndex; } }
     public int StashIndex { get { return stashIndex; } }
     public Sprite ItemIcon { get { return icon; } }
-    public void SaveGridPositon(Vector2 gridPos, int categoryIndex, int stashIndex)
+    public void SaveGridPositon(Vector2Int gridPos, int categoryIndex, int stashIndex)
     {
         this.categoryIndex = categoryIndex;
         this.stashIndex = stashIndex;

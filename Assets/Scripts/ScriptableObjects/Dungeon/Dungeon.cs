@@ -9,7 +9,6 @@ using UnityEngine;
 public class Dungeon : ScriptableObject, IDungeonSaveData//, IInformation
 {
 
-
     #region Fields
     [SerializeField,Expose("Dungeon Name")] private string dungeonName;
     [SerializeField] private List<Wave> waves = new List<Wave>();

@@ -20,6 +20,7 @@ public class HealthSystem
     }
     public HealthSystem()
     {
+        maxHealth = new CharacterStat(5); 
     }
 
     public void AddModifer(StatModifier mod)

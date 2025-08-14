@@ -1,10 +1,13 @@
-﻿
+
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TowerCrafter.Grid;
 using TowerCrafter.Grid.Utlis;
 
+=======
+using UnityEditor;
+>>>>>>> Stashed changes
 public class DragDropUIHandler : MonoBehaviour
 {
     [SerializeField] private InventoryGrid hoveredGrid;
@@ -92,54 +95,46 @@ public class DragDropUIHandler : MonoBehaviour
     }
     private void HandleDrop(DragDropUI data)
     {
-        if (data == null || data.ItemData == null) return;
+        if(data == null || data.ItemData == null) return;
 
-        if (hoveredGrid == null) return;
+        if(hoveredGrid == null) return;
 
-        var dragItemData = data.ItemData;
-        Vector2Int hoveredGridPos = hoveredGrid.GridPositionFromAnchorPosition(data.RectTransform);
+        var item = data.ItemData;
+        var originPosition = item.GridPosition;
+        var dropCordinates = hoveredGrid.GridPositionFromAnchorPosition(data.RectTransform);
 
-        if (!hoveredGrid.InBounds (dragItemData, hoveredGridPos)) return;
+        if (!hoveredGrid.InBounds(item, dropCordinates)) return;
 
         var list = hoveredGrid.CountOverlaps( data);
         if (list.Count == 0)
+=======
+        var overlapped = hoveredGrid.CountOverlaps(data);
+        var count = overlapped.Count;
+        var ovrlapedUI = overlapped.FirstOrDefault();
+        if (count > 1)
+>>>>>>> Stashed changes
         {
-            hoveredGrid.Place(data, hoveredGridPos);
-            if (selectedUI != null)
-            {
-                selectedUI = null;
-            }
             return;
         }
-        if (list.Count == 1)
+        else if (count == 1)
         {
-            var overlappedUI = list.FirstOrDefault();
-
-            Debug.Log("Overlaping with: " + overlappedUI.name);
-
-            if (hoveredGrid.CanSwap(data, overlappedUI))
+            if (hoveredGrid.CanSwap(data, ovrlapedUI))
             {
-                if (hoveredGrid.GetGrid.GetType() == typeof(PlayerStorageGrid)) { }
-                Debug.Log("Swaping with: " + overlappedUI.name);
-                hoveredGrid.MarkSlots( overlappedUI.ItemData, null, overlappedUI.ItemData.GridPosition);
-                hoveredGrid.Place(overlappedUI, data.ItemData.GridPosition);
-                hoveredGrid.Place(data, hoveredGridPos);
-                //We swaped items and no need to update 
-                if(selectedUI != null) 
-                { 
-                    selectedUI = null; 
-                }
-                return;
+                hoveredGrid.MarkSlots(ovrlapedUI.ItemData, null, ovrlapedUI.ItemData.GridPosition);
+                hoveredGrid.Place(ovrlapedUI, originPosition);
+                hoveredGrid.Place(data, dropCordinates);
             }
             else
             {
-                hoveredGrid.Place(data, hoveredGridPos);
-                hoveredGrid.MarkSlots(data.ItemData, data, data.ItemData.GridPosition);
 
-                hoveredGrid.MarkSlots(overlappedUI.ItemData, null, overlappedUI.ItemData.GridPosition);
-                selectedUI = overlappedUI;
             }
         }
+        else if (count == 0)
+        {
+            hoveredGrid.Place(data, dropCordinates);
+        }
+
+
     }
     private void HandleGridChange(InventoryGrid grid)
     {

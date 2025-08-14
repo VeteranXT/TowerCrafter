@@ -110,10 +110,27 @@ namespace TowerCrafter.Grid.Utlis
             }
             return overlappingItems;
         }
+        public static void ReturnToOrginalPosition(this InventoryGrid grid, DragDropUI dragDrop)
+        {
+            dragDrop.RectTransform.anchoredPosition = AnchorPositionFromItem(grid, dragDrop.ItemData);
+        }
+
+        public static void Place(this InventoryGrid grid, DragDropUI dragged, Vector2Int gridPos)
+        {
+            if (InBounds(grid, dragged.ItemData, gridPos))
+            {
+                dragged.RectTransform.anchoredPosition = AnchorPositionFromGridPosition(grid, gridPos);
+                MarkSlots(grid, dragged.ItemData, dragged, gridPos);
+                dragged.ItemData.GridPosition = gridPos;
+                return;
+            }
+            Debug.Log("Trying to place: " + dragged.name + "at Cord:" + gridPos + " Is out of bounds");
+            ;
+        }
         public static bool CanSwap(this InventoryGrid grid, DragDropUI dragged, DragDropUI overlapped)
         {
             // Get the current grid position of the dragged item
-            var currentDropGridPosition = GridPositionFromAnchorPosition(grid, dragged.RectTransform);
+            var dropGridPos = GridPositionFromAnchorPosition(grid, dragged.RectTransform);
             var orginalOriginPosition = dragged.ItemData.GridPosition;
 
             // Check if the dragged item's new position overlaps with the overlapped item's current position
@@ -121,9 +138,14 @@ namespace TowerCrafter.Grid.Utlis
             {
                 for (int y = 0; y < dragged.ItemData.GridSize.y; y++)
                 {
-                    int draggedNewPosX = currentDropGridPosition.x + x;
-                    int draggedNewPosY = currentDropGridPosition.y + y;
-                    var newCell = grid.GetGrid[draggedNewPosX, draggedNewPosY];
+                    int draggedNewPosX = dropGridPos.x + x;
+                    int draggedNewPosY = dropGridPos.y + y;
+
+                    var overlappedCell = grid.GetGrid[draggedNewPosX, draggedNewPosY];
+                    if (overlappedCell != null && overlappedCell != overlapped)
+                    {
+                        return false; // A third item is occupying this cell
+                    }
 
                     for (int x2 = 0; x2 < overlapped.ItemData.GridSize.x; x2++)
                     {
@@ -132,10 +154,14 @@ namespace TowerCrafter.Grid.Utlis
                             int overlappedPosX = orginalOriginPosition.x + x2;
                             int overlappedPosY = orginalOriginPosition.y + y2;
 
-                            var overLapedCell = grid.GetGrid[overlappedPosX, overlappedPosY];
-                            // If any cell of the dragged item's new position overlaps with the overlapped item's current position, return false
+                            // If any cell of the dragged item's new position overlaps with the overlapped item's current position and not 3th item, return false
                             if (draggedNewPosX == overlappedPosX && draggedNewPosY == overlappedPosY)
                             {
+                                var overlappedCell2 = grid.GetGrid[overlappedPosX, overlappedPosY];
+                                if (overlappedCell2 != null && overlappedCell2 != overlapped)
+                                {
+                                    return false; // A third item is occupying this cell
+                                }
                                 return false;
                             }
                         }
@@ -145,7 +171,7 @@ namespace TowerCrafter.Grid.Utlis
 
 
             // Ensure the dragged item's new position is within bounds
-            if (!InBounds(grid, dragged.ItemData, currentDropGridPosition))
+            if (!InBounds(grid, dragged.ItemData, dropGridPos))
             {
                 return false;
             }
@@ -156,7 +182,7 @@ namespace TowerCrafter.Grid.Utlis
                 return false;
             }
 
-            return true;
+            return true; // Swap is valid
         }
         public static bool TryFindFirstAvailablePosition(this InventoryGrid grid, ItemBase item, out Vector2Int gridPosition)
         {

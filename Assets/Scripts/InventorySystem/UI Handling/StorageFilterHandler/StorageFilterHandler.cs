@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+=======
+using static UnityEditor.VersionControl.Asset;
+>>>>>>> Stashed changes
 public class StorageFilterHandler : MonoBehaviour
 {
     [SerializeField] private ScrollViewHandler categoryHandler;
@@ -52,7 +55,8 @@ public class StorageFilterHandler : MonoBehaviour
         stash.transform.SetAsLastSibling();
         CategoryButtons[currentCategoryIndex].AddStash(stash);
     }
-    private void UpdateStashChangeUI(int newStashIndex)
+
+    private void UpdateStashButtonsVisiblity(int newStashIndex)
     {
         var stashes = CategoryButtons[currentCategoryIndex].ItemStashes;
 
@@ -77,15 +81,51 @@ public class StorageFilterHandler : MonoBehaviour
         currentCategoryIndex = newStashIndex;
         EventStashChanged?.Invoke(newStashIndex);
     }
-    private void UpdateCategoryUI(int NewCategoryIndex)
+    private void UpdateCategoryUI(int newCategory)
     {
-        currentStashIndex = 0;
-        
+        currentCategoryIndex = newCategory;
+        HideStashesButtons(newCategory);
+        EventCategoryChanged?.Invoke(newCategory);
+    }
+    private void ShowOrHideUI(int newStashIndex)
+    {
+        currentStashIndex = newStashIndex;
+        foreach (var category in CategoryButtons)
+        {
+            if (category.ItemStashes.Count == 0) continue;
+            foreach (var stash in category.ItemStashes)
+            {
+                foreach (var UI in stash.ActiveUi)
+                {
+                    var item = UI.ItemData;
+                    var itemCategoryIndex = item.CategoryIndex;
+                    var itemStashIndex = item.StashIndex;
+                   
+                    if (!UI.IsDragged 
+                        && itemStashIndex != newStashIndex 
+                        && itemCategoryIndex != currentCategoryIndex )
+                    {
+                        Debug.Log("Hiding  item: " + item.ItemName);
+                        UI.gameObject.SetActive(false);
+                        grid.MarkSlots(item, null, item.GridPosition);
+
+                    }
+                    else
+                    {
+                        UI.gameObject.SetActive(true);
+                        grid.MarkSlots(item, UI, item.GridPosition);
+                    }
+                }
+            }
+        }
+    }
+    private void HideStashesButtons(int newCategory)
+    {
         foreach (var category in CategoryButtons)
         {
             foreach (var stash in category.ItemStashes)
             {
-                if (category.transform.GetSiblingIndex() != NewCategoryIndex)
+                if (category.transform.GetSiblingIndex() != newCategory)
                 {
                     //Hide all stashes form older Category
                     stash.gameObject.SetActive(false);
@@ -96,11 +136,7 @@ public class StorageFilterHandler : MonoBehaviour
                     stash.gameObject.SetActive(true);
                 }
             }
-           
         }
-        currentCategoryIndex = NewCategoryIndex;
-        UpdateStashChangeUI(currentStashIndex);
-        EventCategoryChanged?.Invoke(currentCategoryIndex);
     }
 
     public void ChangeStashCategory()
@@ -108,4 +144,21 @@ public class StorageFilterHandler : MonoBehaviour
 
     }
    
+=======
+    private void CreateCategory()
+    {
+        var cat = GeneralFactory.CreateCategory(stashParent, prefabCatrgoryOrStash);
+        cat.CategoryButton.onClick.AddListener(() => { UpdateCategoryUI(cat.transform.GetSiblingIndex()); });
+        CategoryButtons.Add(cat);
+        categoryHandler.AddButton.transform.SetAsLastSibling();
+    }
+    private void CreateStash()
+    {
+        var stash = GeneralFactory.CreateStash(stashParent, prefabCatrgoryOrStash, currentStashIndex);
+        stash.Button.onClick.AddListener(() => { UpdateStashButtonsVisiblity(stash.transform.GetSiblingIndex()); });
+        CategoryButtons[currentCategoryIndex].AddStash(stash);
+        stashHandler.AddButton.transform.SetAsLastSibling();
+
+    }
+>>>>>>> Stashed changes
 }

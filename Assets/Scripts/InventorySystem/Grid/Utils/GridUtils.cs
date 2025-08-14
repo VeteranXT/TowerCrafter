@@ -48,6 +48,43 @@ namespace TowerCrafter.Grid.Utlis
             return true;
 
         }
+        public static Vector2Int GridPositionFromAnchorPosition(this InventoryGrid grid, RectTransform rect)
+        {
+            return new Vector2Int(
+                Mathf.RoundToInt(rect.anchoredPosition.x / grid.Width),
+                Mathf.RoundToInt(-rect.anchoredPosition.y / grid.Height)
+            );
+        }
+        public static Vector2 AnchorPositionFromItem(this InventoryGrid grid, ItemBase item)
+        {
+            return new Vector2(
+                Mathf.RoundToInt(item.GridPosition.x * grid.Width),
+                Mathf.RoundToInt(item.GridPosition.y * grid.Height)
+            );
+        }
+        public static Vector2 AnchorPositionFromGridPosition(this InventoryGrid grid, Vector2 gridPosition)
+        {
+            return new Vector2(
+                Mathf.FloorToInt(gridPosition.x * grid.Width),
+                Mathf.FloorToInt(-gridPosition.y * grid.Width)
+            );
+        }
+        public static void ReturnToOrginalPosition(this InventoryGrid grid, DragDropUI dragDrop)
+        {
+            dragDrop.RectTransform.anchoredPosition = AnchorPositionFromItem(grid, dragDrop.ItemData);
+        }
+        public static void Place(this InventoryGrid grid, DragDropUI dragged, Vector2Int gridPos)
+        {
+            if (InBounds(grid, dragged.ItemData, gridPos))
+            {
+                dragged.RectTransform.anchoredPosition = AnchorPositionFromGridPosition(grid, gridPos);
+                MarkSlots(grid, dragged.ItemData, dragged, gridPos);
+                dragged.ItemData.GridPosition = gridPos;
+                return;
+            }
+            Debug.Log("Trying to place: " + dragged.name + "at Cord:" + gridPos + " Is out of bounds");
+            ;
+        }
         public static HashSet<DragDropUI> CountOverlaps(this InventoryGrid grid, DragDropUI currentlyDragging)
         {
             HashSet<DragDropUI> overlappingItems = new HashSet<DragDropUI>();
@@ -65,9 +102,6 @@ namespace TowerCrafter.Grid.Utlis
                     int xPos = (int)gridPosition.x + x;
                     int yPos = (int)gridPosition.y + y;
 
-                    if (xPos < 0 || xPos >= grid.Width || yPos < 0 || yPos >= grid.Height)
-                        return null;
-
                     var Drag = grid.GetGrid[xPos, yPos];
 
                     if (Drag != null)
@@ -75,23 +109,6 @@ namespace TowerCrafter.Grid.Utlis
                 }
             }
             return overlappingItems;
-        }
-        public static void ReturnToOrginalPosition(this InventoryGrid grid, DragDropUI dragDrop)
-        {
-            dragDrop.RectTransform.anchoredPosition = AnchorPositionFromItem(grid, dragDrop.ItemData);
-        }
-
-        public static void Place(this InventoryGrid grid, DragDropUI dragged, Vector2Int gridPos)
-        {
-            if (InBounds(grid, dragged.ItemData, gridPos))
-            {
-                dragged.RectTransform.anchoredPosition = AnchorPositionFromGridPosition(grid, gridPos);
-                MarkSlots(grid, dragged.ItemData, dragged, gridPos);
-                dragged.ItemData.GridPosition = gridPos;
-                return;
-            }
-            Debug.Log("Trying to place: " + dragged.name + "at Cord:" + gridPos + " Is out of bounds");
-            ;
         }
         public static bool CanSwap(this InventoryGrid grid, DragDropUI dragged, DragDropUI overlapped)
         {
@@ -185,28 +202,6 @@ namespace TowerCrafter.Grid.Utlis
 
             // No valid position found
             return false;
-        }
-
-        public static Vector2Int GridPositionFromAnchorPosition(this InventoryGrid grid, RectTransform rect)
-        {
-            return new Vector2Int(
-                Mathf.RoundToInt(rect.anchoredPosition.x / grid.Width),
-                Mathf.RoundToInt(-rect.anchoredPosition.y / grid.Height)
-            );
-        }
-        public static Vector2 AnchorPositionFromItem(this InventoryGrid grid, ItemBase item)
-        {
-            return new Vector2(
-                Mathf.RoundToInt(item.GridPosition.x * grid.Width),
-                Mathf.RoundToInt(-item.GridPosition.y * grid.Height)
-            );
-        }
-        public static Vector2 AnchorPositionFromGridPosition(this InventoryGrid grid, Vector2 gridPosition)
-        {
-            return new Vector2(
-                Mathf.FloorToInt(gridPosition.x * grid.Width),
-                Mathf.FloorToInt(-gridPosition.y * grid.Width)
-            );
         }
     }
 }

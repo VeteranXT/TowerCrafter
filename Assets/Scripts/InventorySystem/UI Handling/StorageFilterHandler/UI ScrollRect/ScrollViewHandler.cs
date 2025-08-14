@@ -12,7 +12,6 @@ public class ScrollViewHandler : MonoBehaviour
     public static event Action EventCreateButton;
     private RectTransform contentRect;
     private RectTransform viewportRect;
-    public Button AddButton { get { return addButton; } }
     private void Start()
     {
         if (contentRect == null || moveLeft == null || moveRight == null || addButton == null)

@@ -13,19 +13,10 @@ public class UIStash : MonoBehaviour
     [SerializeField] private List<DragDropUI> activeUi = new List<DragDropUI>();
     [SerializeField] private int categoryIndex;
     public int CategoryIndex { get { return categoryIndex; }  set { categoryIndex = value; } }
-    public List<DragDropUI> ActiveUi { get { return activeUi; } }
-    public Button Button { get { return stashButton; } }
-
-    private void Awake()
-    {
-        stashName = GetComponent<TMP_Text>();
-        stashIcon  = GetComponent<Image>();
-        stashButton = GetComponent<Button>();
-    }
+    public List<DragDropUI> DragDropUI { get { return activeUi; } }
     public int CurretStashIndex()
     {
         return transform.GetSiblingIndex();
-        
     }
 
   

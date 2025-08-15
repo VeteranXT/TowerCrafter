@@ -14,18 +14,13 @@ public class UICategory : MonoBehaviour
     [SerializeField] private Image categoryIcon;
     [SerializeField] private Button categoryButton;
 
-    private List<UIStash> itemStash = new List<UIStash>();
-    public List<UIStash> ItemStashes {  get { return itemStash; }  set { itemStash = value; } }
-
-    public static UICategory CreateCategory(Transform parent, GameObject prefab, string categoryName = "")
-    {
-        var cat =  Instantiate(prefab, parent.transform).AddComponent<UICategory>();
-
-        return cat;
-    }
+    private List<UIStash> buttonStashes = new List<UIStash>();
+    public List<UIStash> ItemStashes {  get { return buttonStashes; }  set { buttonStashes = value; } }
+    public Button GetButton { get { return categoryButton; } }
+    
     public void AddStash(UIStash stash)
     {
-        itemStash.Add(stash);
+        buttonStashes.Add(stash);
     }
     public void SetSiblingIndex(int index)
     {

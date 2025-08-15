@@ -17,12 +17,18 @@ public  class GeneralFactory : MonoBehaviour
         return drag;
     }
 
-    public static UIStash CreateStash(Transform parent, GameObject prefab, int categoryIndex, string name = "")
+    public static UIStash CreateStash(Transform parent, GameObject prefab)
     {
         var storage = Instantiate(prefab, parent).AddComponent<UIStash>();
-        storage.CategoryIndex = categoryIndex;
 
         return storage;
+    }
+
+    public static UICategory CreateCategory(Transform parent, GameObject prefab)
+    {
+        var cat = Instantiate(prefab, parent.transform).AddComponent<UICategory>();
+
+        return cat;
     }
 }
 

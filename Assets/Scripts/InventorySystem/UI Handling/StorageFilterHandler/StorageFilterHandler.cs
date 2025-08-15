@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-=======
-using static UnityEditor.VersionControl.Asset;
->>>>>>> Stashed changes
 public class StorageFilterHandler : MonoBehaviour
 {
     [SerializeField] private ScrollViewHandler categoryHandler;
@@ -17,7 +14,6 @@ public class StorageFilterHandler : MonoBehaviour
 
     [SerializeField] private GameObject prefabCatrgoryOrStash;
 
-    [SerializeField] private List<DragDropUI> activeUI = new List<DragDropUI>();
     [SerializeField] private List<UICategory> CategoryButtons = new List<UICategory>();
 
     [SerializeField] private int currentCategoryIndex = 0;
@@ -33,6 +29,7 @@ public class StorageFilterHandler : MonoBehaviour
         stashParent = GetComponentInChildren<StashTag>().GetComponent<Transform>();
         gridParent = GetComponentInChildren<PlayerGridTag>().GetComponent<Transform>();
 
+   
     }
     private void Start()
     {
@@ -40,20 +37,25 @@ public class StorageFilterHandler : MonoBehaviour
         categoryParent = GetComponentInChildren<CategoryTag>().GetComponent<Transform>();
         stashParent = GetComponentInChildren<StashTag>().GetComponent<Transform>();
         gridParent = GetComponentInChildren<PlayerGridTag>().GetComponent<Transform>();
+        categoryHandler.GetAddButtom.onClick.AddListener(() =>{ CreateCategory(); });
 
     }
-    private void CreateCategory()
+    private UICategory CreateCategory()
     {
-        var cat = UICategory.CreateCategory(categoryParent, prefabCatrgoryOrStash);
+        var cat = GeneralFactory.CreateCategory(categoryParent, prefabCatrgoryOrStash);
         cat.transform.SetAsLastSibling();
-        cat.SetSiblingIndex(transform.transform.GetSiblingIndex());
+        var simblingIndex = cat.transform.GetSiblingIndex();
+
+        cat.GetButton.onClick.AddListener(() => { UpdateCategoryUI(simblingIndex); });
         CategoryButtons.Add(cat);
+        return cat;
     }
-    private void CreateStash()
+    private UIStash CreateStash()
     {
-        var stash = UIStash.CreateStash(stashParent, prefabCatrgoryOrStash, currentStashIndex);
+        var stash = GeneralFactory.CreateStash(stashParent, prefabCatrgoryOrStash);
         stash.transform.SetAsLastSibling();
         CategoryButtons[currentCategoryIndex].AddStash(stash);
+        return stash;
     }
 
     private void UpdateStashButtonsVisiblity(int newStashIndex)
@@ -93,9 +95,9 @@ public class StorageFilterHandler : MonoBehaviour
         foreach (var category in CategoryButtons)
         {
             if (category.ItemStashes.Count == 0) continue;
-            foreach (var stash in category.ItemStashes)
+            foreach (UIStash stash in category.ItemStashes)
             {
-                foreach (var UI in stash.ActiveUi)
+                foreach (var UI in stash.DragDropUI)
                 {
                     var item = UI.ItemData;
                     var itemCategoryIndex = item.CategoryIndex;
@@ -107,13 +109,13 @@ public class StorageFilterHandler : MonoBehaviour
                     {
                         Debug.Log("Hiding  item: " + item.ItemName);
                         UI.gameObject.SetActive(false);
-                        grid.MarkSlots(item, null, item.GridPosition);
+                        //grid.MarkSlots(item, null, item.GridPosition);
 
                     }
                     else
                     {
                         UI.gameObject.SetActive(true);
-                        grid.MarkSlots(item, UI, item.GridPosition);
+                        //grid.MarkSlots(item, UI, item.GridPosition);
                     }
                 }
             }
@@ -139,26 +141,7 @@ public class StorageFilterHandler : MonoBehaviour
         }
     }
 
-    public void ChangeStashCategory()
-    {
 
-    }
-   
-=======
-    private void CreateCategory()
-    {
-        var cat = GeneralFactory.CreateCategory(stashParent, prefabCatrgoryOrStash);
-        cat.CategoryButton.onClick.AddListener(() => { UpdateCategoryUI(cat.transform.GetSiblingIndex()); });
-        CategoryButtons.Add(cat);
-        categoryHandler.AddButton.transform.SetAsLastSibling();
-    }
-    private void CreateStash()
-    {
-        var stash = GeneralFactory.CreateStash(stashParent, prefabCatrgoryOrStash, currentStashIndex);
-        stash.Button.onClick.AddListener(() => { UpdateStashButtonsVisiblity(stash.transform.GetSiblingIndex()); });
-        CategoryButtons[currentCategoryIndex].AddStash(stash);
-        stashHandler.AddButton.transform.SetAsLastSibling();
+  
 
-    }
->>>>>>> Stashed changes
 }

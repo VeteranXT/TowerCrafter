@@ -11,9 +11,9 @@ public class UIStash : MonoBehaviour
     [SerializeField] private Image stashIcon;
     [SerializeField] private Button stashButton;
     [SerializeField] private List<DragDropUI> activeUi = new List<DragDropUI>();
-    [SerializeField] private int categoryIndex;
-    public int CategoryIndex { get { return categoryIndex; }  set { categoryIndex = value; } }
     public List<DragDropUI> DragDropUI { get { return activeUi; } }
+
+    public Button GetButton { get { return stashButton; } }
     public int CurretStashIndex()
     {
         return transform.GetSiblingIndex();

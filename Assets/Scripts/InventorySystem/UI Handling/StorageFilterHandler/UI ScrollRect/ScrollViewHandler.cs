@@ -9,9 +9,10 @@ public class ScrollViewHandler : MonoBehaviour
     [SerializeField] private Button moveRight;
     [SerializeField] private Button moveLeft;
     [SerializeField] private Button addButton;
-    public static event Action EventCreateButton;
     private RectTransform contentRect;
     private RectTransform viewportRect;
+
+    public Button GetAddButtom { get { return addButton; } }
     private void Start()
     {
         if (contentRect == null || moveLeft == null || moveRight == null || addButton == null)
@@ -20,11 +21,10 @@ public class ScrollViewHandler : MonoBehaviour
         }
         viewportRect = rectView.viewport;
  
-        moveRight?.onClick.AddListener(MoveRight);
-        moveLeft?.onClick.AddListener(MoveLeft);
-        addButton?.onClick.AddListener(() =>
+        moveRight.onClick.AddListener(MoveRight);
+        moveLeft.onClick.AddListener(MoveLeft);
+        addButton.onClick.AddListener(() =>
         { 
-            EventCreateButton?.Invoke(); 
             addButton.transform.SetAsLastSibling();
         });
     }

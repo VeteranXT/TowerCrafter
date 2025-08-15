@@ -83,7 +83,6 @@ namespace TowerCrafter.Grid.Utlis
                 return;
             }
             Debug.Log("Trying to place: " + dragged.name + "at Cord:" + gridPos + " Is out of bounds");
-            ;
         }
         public static HashSet<DragDropUI> CountOverlaps(this InventoryGrid grid, DragDropUI currentlyDragging)
         {
@@ -110,23 +109,9 @@ namespace TowerCrafter.Grid.Utlis
             }
             return overlappingItems;
         }
-        public static void ReturnToOrginalPosition(this InventoryGrid grid, DragDropUI dragDrop)
-        {
-            dragDrop.RectTransform.anchoredPosition = AnchorPositionFromItem(grid, dragDrop.ItemData);
-        }
+        
 
-        public static void Place(this InventoryGrid grid, DragDropUI dragged, Vector2Int gridPos)
-        {
-            if (InBounds(grid, dragged.ItemData, gridPos))
-            {
-                dragged.RectTransform.anchoredPosition = AnchorPositionFromGridPosition(grid, gridPos);
-                MarkSlots(grid, dragged.ItemData, dragged, gridPos);
-                dragged.ItemData.GridPosition = gridPos;
-                return;
-            }
-            Debug.Log("Trying to place: " + dragged.name + "at Cord:" + gridPos + " Is out of bounds");
-            ;
-        }
+       
         public static bool CanSwap(this InventoryGrid grid, DragDropUI dragged, DragDropUI overlapped)
         {
             // Get the current grid position of the dragged item

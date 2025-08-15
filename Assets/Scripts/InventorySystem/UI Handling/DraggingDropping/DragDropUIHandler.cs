@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TowerCrafter.Grid;
 using TowerCrafter.Grid.Utlis;
-
-=======
-using UnityEditor;
->>>>>>> Stashed changes
 public class DragDropUIHandler : MonoBehaviour
 {
     [SerializeField] private InventoryGrid hoveredGrid;
@@ -105,29 +101,35 @@ public class DragDropUIHandler : MonoBehaviour
 
         if (!hoveredGrid.InBounds(item, dropCordinates)) return;
 
-        var list = hoveredGrid.CountOverlaps( data);
-        if (list.Count == 0)
-=======
-        var overlapped = hoveredGrid.CountOverlaps(data);
-        var count = overlapped.Count;
-        var ovrlapedUI = overlapped.FirstOrDefault();
-        if (count > 1)
->>>>>>> Stashed changes
-        {
-            return;
-        }
-        else if (count == 1)
+            var list = hoveredGrid.CountOverlaps( data);
+            var count = list.Count;
+        if (list.Count == 0) return;
+
+            var ovrlapedUI = list.FirstOrDefault();
+        if (count > 1) return;
+
+        if (count == 1)
         {
             if (hoveredGrid.CanSwap(data, ovrlapedUI))
             {
                 hoveredGrid.MarkSlots(ovrlapedUI.ItemData, null, ovrlapedUI.ItemData.GridPosition);
                 hoveredGrid.Place(ovrlapedUI, originPosition);
                 hoveredGrid.Place(data, dropCordinates);
+                if(selectedUI != null)
+                {
+                    selectedUI = null;
+                }
+                
+                
             }
             else
             {
-
+                hoveredGrid.Place(data, dropCordinates);
+                selectedUI = ovrlapedUI;
+                hoveredGrid.MarkSlots(selectedUI.ItemData, null, selectedUI.ItemData.GridPosition);
             }
+          
+          
         }
         else if (count == 0)
         {

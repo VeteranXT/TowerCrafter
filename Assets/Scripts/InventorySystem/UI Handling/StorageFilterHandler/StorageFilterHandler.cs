@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class StorageFilterHandler : MonoBehaviour
 {
-    [SerializeField] private ScrollViewHandler categoryHandler;
-    [SerializeField] private Transform categoryParent;
+    [SerializeField] private ScrollViewHandler categoryScrollViewUI;
 
-    [SerializeField] private ScrollViewHandler stashHandler;
-    [SerializeField] private Transform stashParent;
+    [SerializeField] private ScrollViewHandler stashScrollViewUI;
 
-    [SerializeField] private Transform gridParent;
+    [SerializeField] private RectTransform gridParent;
 
     [SerializeField] private GameObject prefabCatrgoryOrStash;
 
@@ -22,41 +20,69 @@ public class StorageFilterHandler : MonoBehaviour
     public static Action<int> EventCategoryChanged;
     public static Action<int> EventStashChanged;
 
-    private void OnValidate()
-    {
-        //categoryHandler = 
-        categoryParent = GetComponentInChildren<CategoryTag>().GetComponent<Transform>();
-        stashParent = GetComponentInChildren<StashTag>().GetComponent<Transform>();
-        gridParent = GetComponentInChildren<PlayerGridTag>().GetComponent<Transform>();
 
-   
-    }
     private void Start()
     {
-
-        categoryParent = GetComponentInChildren<CategoryTag>().GetComponent<Transform>();
-        stashParent = GetComponentInChildren<StashTag>().GetComponent<Transform>();
-        gridParent = GetComponentInChildren<PlayerGridTag>().GetComponent<Transform>();
-        categoryHandler.GetAddButtom.onClick.AddListener(() =>{ CreateCategory(); });
-
+        FindRefrences();
+        //Check if File Exists
+        //if exists
+        //Load all items
+        //Load all Categories and stashes
+        //Create all of categoris and stashes
+        //Create UI and Place it.
+        //if file do not exist
+        InitializeStorage();
     }
-    private UICategory CreateCategory()
+    public void InitializeStorage()
     {
-        var cat = GeneralFactory.CreateCategory(categoryParent, prefabCatrgoryOrStash);
-        cat.transform.SetAsLastSibling();
-        var simblingIndex = cat.transform.GetSiblingIndex();
-
-        cat.GetButton.onClick.AddListener(() => { UpdateCategoryUI(simblingIndex); });
-        CategoryButtons.Add(cat);
-        return cat;
+        for (int i = 0; i < 1; i++)
+        {
+            //GeneralFactory.CreateCategory(GetCategoryParentContent, prefabCatrgoryOrStash, UpdateCategoryUI();
+            for (int x = 0; x < 3; x++)
+            {
+                //GeneralFactory.CreateStash(GetStashParentContent, prefabCatrgoryOrStash);
+            }
+        }
     }
-    private UIStash CreateStash()
+    public Transform GetCategoryParentContent { get { return categoryScrollViewUI.ParentContentTransform; } }
+    public Transform GetStashParentContent { get { return stashScrollViewUI.ParentContentTransform; } }
+    private void FindRefrences()
     {
-        var stash = GeneralFactory.CreateStash(stashParent, prefabCatrgoryOrStash);
-        stash.transform.SetAsLastSibling();
-        CategoryButtons[currentCategoryIndex].AddStash(stash);
-        return stash;
+        //Get root of all things.
+        var rootParent = transform.root;
+        //Get Category Scrollview
+        var cat = rootParent.GetComponentInChildren<CategoryScrollViewTag>().GetComponent<ScrollViewHandler>();
+        categoryScrollViewUI = cat.GetComponent<ScrollViewHandler>();
+        //Subscribe to on Click
+        //categoryScrollViewUI.GetAddButtom.onClick.AddListener(() => { CreateCategory(); });
+        //Find parent where 
+
+
+
+        stashScrollViewUI = rootParent.GetComponentInChildren<StashScrollViewTag>().GetComponent<ScrollViewHandler>();
+       //stashScrollViewUI.GetAddButtom.onClick.AddListener(() => { CreateStash(); });
+
+        gridParent = GetComponent<RectTransform>();
+        prefabCatrgoryOrStash = Resources.Load<GameObject>("Prefabs/Prefab_CategoryOrStash");
     }
+    //private UICategory CreateCategory()
+    //{
+    //    UICategory cat = GeneralFactory.CreateCategory(GetCategoryParentContent, prefabCatrgoryOrStash, () => { UpdateCategoryUI() });
+    //    cat.transform.SetAsLastSibling();
+    //    var simblingIndex = cat.transform.GetSiblingIndex();
+
+    //    cat.GetButton.onClick.AddListener(() => { UpdateCategoryUI(simblingIndex); });
+    //    CategoryButtons.Add(cat);
+    //    return cat;
+    //}
+    
+    //private UIStash CreateStash()
+    //{
+    //    var stash = GeneralFactory.CreateStash(GetStashParentContent, prefabCatrgoryOrStash);
+    //    stash.transform.SetAsLastSibling();
+    //    CategoryButtons[currentCategoryIndex].AddStash(stash);
+    //    return stash;
+    //}
 
     private void UpdateStashButtonsVisiblity(int newStashIndex)
     {

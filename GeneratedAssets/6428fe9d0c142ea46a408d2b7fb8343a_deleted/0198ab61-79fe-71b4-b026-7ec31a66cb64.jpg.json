@@ -1,0 +1,20 @@
+{
+    "asset": "6428fe9d0c142ea46a408d2b7fb8343a",
+    "fileName": "0198ab61-79fe-71b4-b026-7ec31a66cb64.jpg",
+    "prompt": "InventoryUI made out transparent glass",
+    "negativePrompt": "No bottom/top boxes",
+    "model": "feb545d0-614d-4cfb-a290-32d88fa443cd",
+    "modelName": "Game UI Elements (Flux)",
+    "customSeed": -1,
+    "w3CTraceId": "014418a6dcc8dfd36dddb1ab9f57ecf0",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

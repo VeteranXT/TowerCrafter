@@ -1,0 +1,20 @@
+{
+    "asset": "6428fe9d0c142ea46a408d2b7fb8343a",
+    "fileName": "0198ab62-edc2-778a-b9b0-97178788cab3.jpg",
+    "prompt": " Board made of metal",
+    "negativePrompt": "No bottom/top boxes",
+    "model": "feb545d0-614d-4cfb-a290-32d88fa443cd",
+    "modelName": "Game UI Elements (Flux)",
+    "customSeed": -1,
+    "w3CTraceId": "2d2d9f5e4ffb4405c4374c40a4bf69c8",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

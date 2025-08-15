@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class ScrollViewHandler : MonoBehaviour
 {
     [SerializeField] private ScrollRect rectView;
+    [SerializeField] private Transform content;
     [SerializeField] private Button moveRight;
     [SerializeField] private Button moveLeft;
     [SerializeField] private Button addButton;
-    private RectTransform contentRect;
+    private readonly RectTransform contentRect;
     private RectTransform viewportRect;
-
     public Button GetAddButtom { get { return addButton; } }
+    public Transform ParentContentTransform { get { return content; } }
     private void Start()
     {
+        rectView = GetComponent<ScrollRect>(); 
         if (contentRect == null || moveLeft == null || moveRight == null || addButton == null)
         {
             return;

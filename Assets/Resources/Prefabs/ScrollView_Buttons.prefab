@@ -1093,6 +1093,7 @@ GameObject:
   - component: {fileID: 702729988425796584}
   - component: {fileID: 691274604955122985}
   - component: {fileID: 7896210334902314114}
+  - component: {fileID: 961504947458330219}
   m_Layer: 5
   m_Name: ScrollView_Buttons
   m_TagString: Untagged
@@ -1178,3 +1179,16 @@ MonoBehaviour:
   moveRight: {fileID: 4094219719233750782}
   moveLeft: {fileID: 8618404290324885580}
   addButton: {fileID: 5902772538177116040}
+  content: {fileID: 5608981828437999758}
+--- !u!114 &961504947458330219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746884571204963678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f3f9eb4770dac4589c8ca907e00122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CategoryScrollViewTag

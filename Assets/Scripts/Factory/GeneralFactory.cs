@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TowerCrafter.Grid;
 using TowerCrafter.Grid.Utlis;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
 
 public  class GeneralFactory : MonoBehaviour
 {
@@ -17,17 +19,17 @@ public  class GeneralFactory : MonoBehaviour
         return drag;
     }
 
-    public static UIStash CreateStash(Transform parent, GameObject prefab)
+    public static UIStash CreateStash(Transform parent, GameObject prefab, UnityAction call)
     {
-        var storage = Instantiate(prefab, parent).AddComponent<UIStash>();
-
+        UIStash storage = Instantiate(prefab, parent).AddComponent<UIStash>();
+        storage.GetButton.onClick.AddListener(call);
         return storage;
     }
 
-    public static UICategory CreateCategory(Transform parent, GameObject prefab)
+    public static UICategory CreateCategory(Transform parent, GameObject prefab, UnityAction call)
     {
-        var cat = Instantiate(prefab, parent.transform).AddComponent<UICategory>();
-
+        UICategory cat = Instantiate(prefab, parent.transform).AddComponent<UICategory>();
+        cat.GetButton.onClick.AddListener(call);
         return cat;
     }
 }

@@ -1,0 +1,20 @@
+{
+    "asset": "6428fe9d0c142ea46a408d2b7fb8343a",
+    "fileName": "0198ab63-5379-73d1-b209-92a47f3ee7db.jpg",
+    "prompt": " Board made of metal",
+    "negativePrompt": "No bottom/top boxes",
+    "model": "4dc55660-f3eb-42ba-93a4-6261d6b2b8ec",
+    "modelName": "Game UI",
+    "customSeed": -1,
+    "w3CTraceId": "05b52f031cb62d2474df13dadfcfdaf7",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

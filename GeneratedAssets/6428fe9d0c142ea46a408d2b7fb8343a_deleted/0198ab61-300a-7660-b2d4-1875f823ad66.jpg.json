@@ -1,0 +1,20 @@
+{
+    "asset": "6428fe9d0c142ea46a408d2b7fb8343a",
+    "fileName": "0198ab61-300a-7660-b2d4-1875f823ad66.jpg",
+    "prompt": "Inventory made out of wood",
+    "negativePrompt": "No bottom/top boxes",
+    "model": "feb545d0-614d-4cfb-a290-32d88fa443cd",
+    "modelName": "Game UI Elements (Flux)",
+    "customSeed": -1,
+    "w3CTraceId": "d54e1567344f03502f7e494f1000b172",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

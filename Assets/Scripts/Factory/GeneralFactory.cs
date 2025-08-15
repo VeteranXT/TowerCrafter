@@ -19,17 +19,15 @@ public  class GeneralFactory : MonoBehaviour
         return drag;
     }
 
-    public static UIStash CreateStash(Transform parent, GameObject prefab, UnityAction call)
+    public static UIStash CreateStash(Transform parent, GameObject prefab)
     {
-        UIStash storage = Instantiate(prefab, parent).AddComponent<UIStash>();
-        storage.GetButton.onClick.AddListener(call);
+        UIStash storage = Instantiate(prefab, parent).AddComponent<UIStash>();;
         return storage;
     }
 
     public static UICategory CreateCategory(Transform parent, GameObject prefab, UnityAction call)
     {
         UICategory cat = Instantiate(prefab, parent.transform).AddComponent<UICategory>();
-        cat.GetButton.onClick.AddListener(call);
         return cat;
     }
 }

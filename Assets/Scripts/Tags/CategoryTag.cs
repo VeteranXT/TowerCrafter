@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class CategoryTag : MonoBehaviour {}
+public class CategoryTag : BaseMonoBehaviour { }
 

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
-public class UIDungeonShow : MonoBehaviour
+public class UIDungeonShow : BaseMonoBehaviour
 {
     [SerializeField] private Image dungeonStatusImage;
     [SerializeField] private Dungeon dungeon;

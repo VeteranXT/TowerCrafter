@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class UIMapShow : BaseMonoBehaviour
+public class InventoryGeneral : BaseMonoBehaviour
 {
-   
+    public static List<ItemBase> items = new List<ItemBase>();
 }
-    
+

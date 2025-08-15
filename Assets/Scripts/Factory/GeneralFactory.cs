@@ -1,34 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TowerCrafter.Grid;
+﻿using TowerCrafter.Grid;
 using TowerCrafter.Grid.Utlis;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Events;
-
-public  class GeneralFactory : MonoBehaviour
+public static class GeneralFactory
 {
-    public static DragDropUI CreateDragDropUI(Transform parent, DragDropUI prefab, ItemBase item, Vector2Int gridPos, InventoryGrid grid)
+
+    public static DragDropUI CreateDragDropUI(GameObject prefab, Transform parent, ItemBase item, Vector2Int gridPos, CustomGrid grid)
     {
-        DragDropUI drag = Instantiate(prefab, parent);
+        var drag = DragDropUI.Instantiate(prefab.GetComponent<DragDropUI>());
         drag.SetupItem(item);
         drag.RectTransform.anchoredPosition = GridUtils.AnchorPositionFromGridPosition(grid, gridPos);
         return drag;
     }
 
-    public static UIStash CreateStash(Transform parent, GameObject prefab)
+    public static UIStash CreateStash(GameObject prefab, Transform parent)
     {
-        UIStash storage = Instantiate(prefab, parent).AddComponent<UIStash>();;
+        var storage = UIStash.Instantiate(prefab).AddComponent<UIStash>();
         return storage;
     }
 
-    public static UICategory CreateCategory(Transform parent, GameObject prefab, UnityAction call)
+    public static UICategory CreateCategory(GameObject prefab, Transform parent)
     {
-        UICategory cat = Instantiate(prefab, parent.transform).AddComponent<UICategory>();
-        return cat;
+        var category = UICategory.Instantiate(prefab).AddComponent<UICategory>();
+        return category;
     }
 }
 

@@ -19,8 +19,7 @@ namespace UnityEngine.Extensions
             }
             return null;
         }
-   
-        public static List<T> GetComponentsInChildrenWithTag<T>(this GameObject parent, string tag, bool includeInactive = false) where T : Component
+        public static List<T>GetComponentsInChildrenWithTag<T>(this GameObject parent, string tag, bool includeInactive = false) where T : Component
         {
             List<T> results = new List<T>();
             T[] components = parent.GetComponentsInChildren<T>(includeInactive);

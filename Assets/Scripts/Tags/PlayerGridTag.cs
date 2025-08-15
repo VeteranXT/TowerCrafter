@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
-public class PlayerGridTag : MonoBehaviour
+public class PlayerGridTag : BaseMonoBehaviour
 {
 }

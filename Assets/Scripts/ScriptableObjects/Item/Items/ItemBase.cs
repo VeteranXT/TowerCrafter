@@ -18,7 +18,7 @@ public class ItemBase : ScriptableObject, IInformation
 
     [SerializeField] private Sprite icon;
     [Header("Description")]
-    [SerializeField] private Descriptor itemDescription = new Descriptor();
+    [SerializeField] private Descriptor itemDescription = new();
     [SerializeField] private bool hasRarity = true;
     [Header("Is Test ItemName")]
     [SerializeField] private bool isGeneric = true;
@@ -27,8 +27,8 @@ public class ItemBase : ScriptableObject, IInformation
     public Vector2Int GridPosition { get { return gridPosition; } set { gridPosition = value; } }
     public Vector2Int GridSize { get { return _gridsize.GetItemSize; } }
     public string ItemName { get { return itemName; } set { itemName = value; } }
-    public int CategoryIndex { get { return categoryIndex; } }
-    public int StashIndex { get { return stashIndex; } }
+    public int CategoryIndex { get { return categoryIndex; } set { categoryIndex = value; } }
+    public int StashIndex { get { return stashIndex; } set { stashIndex = value; }}
     public Sprite ItemIcon { get { return icon; } }
     public void SaveGridPositon(Vector2Int gridPos, int categoryIndex, int stashIndex)
     {

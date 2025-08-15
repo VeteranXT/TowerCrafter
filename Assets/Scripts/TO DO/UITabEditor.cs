@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-public class UITabEditor : MonoBehaviour
+public class UITabEditor : BaseMonoBehaviour
 {
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private InputField nameField;

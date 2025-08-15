@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class StashTag : MonoBehaviour { }
+public class StashTag : BaseMonoBehaviour { }
 

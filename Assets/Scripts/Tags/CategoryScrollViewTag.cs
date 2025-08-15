@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class CategoryScrollViewTag : MonoBehaviour
+public class CategoryScrollViewTag : BaseMonoBehaviour
 {
 }

@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class StashScrollViewTag : MonoBehaviour
+public class StashScrollViewTag : BaseMonoBehaviour
 {
 }

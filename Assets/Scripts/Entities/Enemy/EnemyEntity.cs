@@ -1,8 +1,9 @@
-﻿using System.Xml.Serialization;
-using UnityEngine;
+﻿using System;
+using System.Xml.Serialization;
+using Unity.Entities;
 using UnityEditorInternal;
-using System;
-public class EnemyEntity : MonoBehaviour
+using UnityEngine;
+public class EnemyEntity : BaseMonoBehaviour
 {
     [Header("General Stats")]
     [SerializeField] private CharacterStat armor = new CharacterStat(0f);
@@ -25,9 +26,13 @@ public class EnemyEntity : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     public float GetMoveSpeed { get { return moveSpeed.Value; } }
-   
-
-
+    protected override void FindReferences()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        rb.gravityScale = 0f;
+    }
     private void Update()
     {
         //path.canMove = isAlive;
@@ -50,19 +55,6 @@ public class EnemyEntity : MonoBehaviour
 
     private void FetchRefrences(Transform target, EnemyEntity entity)
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
-        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
-        rb.gravityScale = 0f;
-
-
-        //animator = GetComponent<Animator>();
-
-        //path = GetComponent<AIPath>();
-        //path.maxSpeed = GetMoveSpeed;
-        //destination = GetComponent<AIDestinationSetter>();
-        //destination.target = target;
-
         health = entity.health;
         maxDamage = entity.maxDamage;
         minDamage = entity.minDamage;
@@ -71,5 +63,11 @@ public class EnemyEntity : MonoBehaviour
         attackRange = entity.attackRange;
         attackSpeed = entity.attackSpeed;
         isPurged = entity.isPurged;
+        //animator = GetComponent<Animator>();
+
+        //path = GetComponent<AIPath>();
+        //path.maxSpeed = GetMoveSpeed;
+        //destination = GetComponent<AIDestinationSetter>();
+        //destination.target = target;
     }
 }
